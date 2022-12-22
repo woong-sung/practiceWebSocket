@@ -28,9 +28,9 @@ public class MessageController extends Socket {
     // 사용자 접속시 실행
     @OnOpen
     public void open(Session newUser) {
-        System.out.println("[connected]");
+        System.out.println("[new User Connected...]");
         session.add(newUser);
-        System.out.println("접속중인 유저 수: " + newUser.getId());
+        System.out.println("접속중인 유저 수: " + (Integer.parseInt(newUser.getId())+1));
     }
 
     // 사용자로부터 메세지를 받으면 실행
@@ -39,7 +39,7 @@ public class MessageController extends Socket {
         for (int i = 0; i < session.size(); i++) {
             if (!receiveSession.getId().equals(session.get(i).getId())) {
                 try {
-                    session.get(i).getBasicRemote().sendText("상대: " + msg);
+                    session.get(i).getBasicRemote().sendText("낯선 사람"+receiveSession.getId()+": "+ msg);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
